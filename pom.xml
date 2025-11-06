@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.LMJU</groupId>
-	<artifactId>projectCW</artifactId>
+	<artifactId>LLM4AbstractingUml</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>projectCW</name>
 	<description>Artifact project for Spring Boot</description>
