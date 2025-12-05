@@ -5,20 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a5080b6-ec90-485b-a47e-bf97df621845" name="Changes" comment="v1.0 Project Design">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/AccessModifier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/ClassType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/RelationshipType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLAttribute.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLLocalVariable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLMethod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLPackage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLParameter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLRelationship.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLReturnType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLSystem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/MetamodelTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/MetamodelFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Attr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/C.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Local.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Met.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Pack.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Par.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Ret.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Sys.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/ai/AIAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/ai/AIAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/ai/UMLPromptGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/ai/UMLPromptGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLAttribute.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLClass.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLLocalVariable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLMethod.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLPackage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLParameter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLRelationship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/URel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLReturnType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLSystem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/UMLCodeParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/UMLCodeParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/MetamodelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/MetamodelTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +58,7 @@
   <component name="GitLabMergeRequestsSettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;first&quot;: &quot;https://gitlab.com/a.alberton/6200comp-2025-26-andrey-alberton-932437.git&quot;,
-    &quot;second&quot;: &quot;da1442d7-786a-4699-8465-6ead22035c91&quot;
+    &quot;second&quot;: &quot;569c25c3-3bf5-4df0-86e3-800c4028e55d&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -72,7 +82,9 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.AIDemo.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ManualGenerationDemo.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
@@ -115,8 +127,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.28238.7" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-IU-252.28238.7" />
       </set>
     </attachedChunks>
   </component>
@@ -135,6 +147,12 @@
       <workItem from="1762425962665" duration="2513000" />
       <workItem from="1762514197464" duration="10000" />
       <workItem from="1763730598851" duration="4142000" />
+      <workItem from="1764760872216" duration="9205000" />
+      <workItem from="1764842508030" duration="609000" />
+      <workItem from="1764845384564" duration="7000" />
+      <workItem from="1764845498656" duration="9000" />
+      <workItem from="1764867531104" duration="76000" />
+      <workItem from="1764950663398" duration="281000" />
     </task>
     <task id="LOCAL-00001" summary="Maven Setup">
       <option name="closed" value="true" />

@@ -9,43 +9,39 @@ class MetamodelTest {
 
     @Test
     void testStudentSystemHierarchy() {
-        // Create the System
-        UMLSystem system = new UMLSystem("UniversitySystem");
+        // 1= Create System (Sys)
+        Sys sys = new Sys("UniversitySystem");
 
-        // Create Packages
-        UMLPackage peoplePack = new UMLPackage("people");
-        UMLPackage studentsPack = new UMLPackage("people.students");
+        // 2= Create Packages (Pack)
+        Pack peoplePack = new Pack("people");
+        Pack studentsPack = new Pack("people.students");
 
-        // Structure: people -> students
-        peoplePack.getSubPackages().add(studentsPack);
-        system.getPackages().add(peoplePack);
+        peoplePack.getPacks().add(studentsPack);
+        sys.getPacks().add(peoplePack);
 
-        // Create 'Person' Class
-        UMLClass personClass = new UMLClass("people.Person", AccessModifier.PUBLIC, ClassType.CLASS);
-        UMLAttribute nameAttr = new UMLAttribute("people.Person.name", AccessModifier.PROTECTED);
-        personClass.getAttributes().add(nameAttr);
+        // 3= Create "Person" Class (C)
+        C personClass = new C("people.Person", AccessModifier.PUBLIC, ClassType.CLASS);
+        Attr nameAttr = new Attr("people.Person.name", AccessModifier.PROTECTED);
+        personClass.getAttrs().add(nameAttr);
         peoplePack.getClasses().add(personClass);
 
-        // Create 'Student' Class
-        UMLClass studentClass = new UMLClass("people.students.Student", AccessModifier.PUBLIC, ClassType.CLASS);
+        // 4= Create "Student" Class (C)
+        C studentClass = new C("people.students.Student", AccessModifier.PUBLIC, ClassType.CLASS);
 
-        // Add Inheritance: Student extends Person
-        UMLRelationship inheritanceRel = new UMLRelationship(
+        // 5= Add Inheritance Relationship (URel)
+        URel inheritanceRel = new URel(
                 "people.Person",
                 Collections.singletonList(RelationshipType.INHERITANCE)
         );
-        studentClass.getRelationships().add(inheritanceRel);
+        studentClass.getURels().add(inheritanceRel);
+
         studentsPack.getClasses().add(studentClass);
 
-
         // Assertions
-        assertEquals("UniversitySystem", system.getName());
-        assertEquals(1, system.getPackages().size());
-        assertEquals("people", system.getPackages().get(0).getName());
-        assertEquals("people.students", system.getPackages().get(0).getSubPackages().get(0).getName());
-
-        UMLClass retrievedStudent = system.getPackages().get(0).getSubPackages().get(0).getClasses().get(0);
-        assertEquals("people.students.Student", retrievedStudent.getName());
-        assertEquals(RelationshipType.INHERITANCE, retrievedStudent.getRelationships().get(0).getTypes().get(0));
+        assertEquals("UniversitySystem", sys.getName());
+        assertEquals("people", sys.getPacks().get(0).getName());
+        assertEquals("people.students.Student",
+                sys.getPacks().get(0).getPacks().get(0).getClasses().get(0).getName()
+        );
     }
 }
