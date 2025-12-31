@@ -4,31 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a5080b6-ec90-485b-a47e-bf97df621845" name="Changes" comment="v1.0 Project Design">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/MetamodelFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Attr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/C.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Local.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Met.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Pack.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Par.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Ret.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Sys.java" afterDir="false" />
+    <list default="true" id="0a5080b6-ec90-485b-a47e-bf97df621845" name="Changes" comment="v1.2 Java System Metamodel Generator">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/ModelAbstractor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/UMLExtractorApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/dataset/Bank/test1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/dataset/Bank/test2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/ai/AIAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/ai/AIAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/ai/UMLPromptGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/ai/UMLPromptGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLAttribute.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLClass.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLLocalVariable.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLMethod.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLPackage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLParameter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLRelationship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/URel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLReturnType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/UMLSystem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/SourceCodeParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/SourceCodeParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/C.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/C.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/UMLCodeParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/UMLCodeParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/MetamodelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/MetamodelTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +67,7 @@
   &quot;keyToString&quot;: {
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;Application.AIDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FullPipelineDemo.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;Application.ManualGenerationDemo.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
@@ -115,7 +100,20 @@
       <recent name="com.LMJU.projectCW" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.UMLExtractorApp">
+    <configuration name="UMLExtractorApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.LMJU.projectCW.output.UMLExtractorApp" />
+      <module name="LLM4AbstractingUml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.LMJU.projectCW.output.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UMLRecoveryService" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="LLM4AbstractingUml" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.LMJU.projectCW.core.UMLRecoveryService" />
@@ -123,6 +121,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.UMLExtractorApp" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -152,7 +155,11 @@
       <workItem from="1764845384564" duration="7000" />
       <workItem from="1764845498656" duration="9000" />
       <workItem from="1764867531104" duration="76000" />
-      <workItem from="1764950663398" duration="281000" />
+      <workItem from="1764950663398" duration="689000" />
+      <workItem from="1765372498767" duration="819000" />
+      <workItem from="1767008149149" duration="3979000" />
+      <workItem from="1767026119792" duration="2823000" />
+      <workItem from="1767188692149" duration="815000" />
     </task>
     <task id="LOCAL-00001" summary="Maven Setup">
       <option name="closed" value="true" />
@@ -178,7 +185,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762428455202</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="v1.2 Java System Metamodel Generator">
+      <option name="closed" value="true" />
+      <created>1764951300415</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1764951300415</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,6 +203,7 @@
     <MESSAGE value="Maven Setup" />
     <MESSAGE value="Maven Setup (Spring)" />
     <MESSAGE value="v1.0 Project Design" />
-    <option name="LAST_COMMIT_MESSAGE" value="v1.0 Project Design" />
+    <MESSAGE value="v1.2 Java System Metamodel Generator" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1.2 Java System Metamodel Generator" />
   </component>
 </project>
