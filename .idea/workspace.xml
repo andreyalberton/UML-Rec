@@ -4,19 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a5080b6-ec90-485b-a47e-bf97df621845" name="Changes" comment="v1.3 Java System Metamodel Generator">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/ai/AIAdapter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/ai/UMLPromptGenerator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/ClassDefinition.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/ModelAbstractor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/RecoveryController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/UMLRecoveryService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/DiagramRenderer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/UMLCodeParser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/UMLExtractorApp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/dataset/Bank/test1.java" beforeDir="false" />
+    <list default="true" id="0a5080b6-ec90-485b-a47e-bf97df621845" name="Changes" comment="v1.4.1">
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/MetamodelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/MetamodelTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +203,7 @@
       <workItem from="1770129959582" duration="878000" />
       <workItem from="1770199764312" duration="2956000" />
       <workItem from="1770631574335" duration="1712000" />
-      <workItem from="1774796475430" duration="330000" />
+      <workItem from="1774796475430" duration="373000" />
     </task>
     <task id="LOCAL-00001" summary="Maven Setup">
       <option name="closed" value="true" />
@@ -264,7 +253,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774796432368</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="v1.4.1">
+      <option name="closed" value="true" />
+      <created>1774796834037</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1774796834037</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -295,6 +292,7 @@
     <MESSAGE value="v1.0 Project Design" />
     <MESSAGE value="v1.2 Java System Metamodel Generator" />
     <MESSAGE value="v1.3 Java System Metamodel Generator" />
-    <option name="LAST_COMMIT_MESSAGE" value="v1.3 Java System Metamodel Generator" />
+    <MESSAGE value="v1.4.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1.4.1" />
   </component>
 </project>

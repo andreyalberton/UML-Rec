@@ -11,7 +11,7 @@ class MetamodelTest {
     void testStudentSystemHierarchy() {
         // 1= Create System (Sys)
         Sys sys = new Sys("UniversitySystem");
-
+//o
         // 2= Create Packages (Pack)
         Pack peoplePack = new Pack("people");
         Pack studentsPack = new Pack("people.students");
