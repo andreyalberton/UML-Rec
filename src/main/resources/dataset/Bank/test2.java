@@ -1,9 +1,9 @@
-package com.LMJU.projectCW.metamodel;
+package Bank;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Attr {
+public class test2 {
     private String name;
     private AccessModifier access;
     private List<String> cName;  // User-defined classes in datatype

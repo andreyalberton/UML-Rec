@@ -5,140 +5,149 @@ import com.LMJU.projectCW.metamodel.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.List;
+import java.util.Stack;
 
 public class SourceCodeParser {
 
-    public void parseAndAddToSystem(String jsonString, Sys system) {
+    public void parseAndAddToSystem(String jsonOutput, Sys currentSys) {
         try {
-            /*
+            // 1. FIX FORMATTING
+            String sanitized = jsonOutput.replace("'", "\"").replace(": null", ": \"void\"");
 
-            Print what the AI actually sent
-            System.out.println("DEBUG: AI JSON -> " + jsonString);
+            // 2. BULLETPROOF JSON REPAIR
+            Stack<Character> stack = new Stack<>();
+            boolean inString = false;
+            for (int i = 0; i < sanitized.length(); i++) {
+                char ch = sanitized.charAt(i);
+                if (ch == '"' && (i == 0 || sanitized.charAt(i - 1) != '\\')) inString = !inString;
 
-            if (jsonString == null || !jsonString.trim().startsWith("{")) {
-                System.err.println("ignoring invalid JSON output.");
-                return;
-            }
-                */
-            JSONObject root = new JSONObject(jsonString);
-
-            String fullPath = root.optString("className", "UnknownClass");
-            String accessStr = root.optString("access", "PUBLIC").toUpperCase();
-            String typeStr = root.optString("type", "CLASS").toUpperCase();
-
-            //  Handle package hierarchy
-            Pack parentPackage = getOrCreatePackageHierarchy(fullPath, system);
-
-            // Create the Class Object
-            C newClass = MetamodelFactory.createClass(
-                    fullPath,
-                    safeAccess(accessStr),
-                    safeType(typeStr),
-                    parentPackage
-            );
-
-            // Parse Attributes
-            if (root.has("attributes")) {
-                JSONArray attrs = root.getJSONArray("attributes");
-                for (int i = 0; i < attrs.length(); i++) {
-                    JSONObject attrJson = attrs.getJSONObject(i);
-                    String attrName = attrJson.getString("name");
-                    String attrAccess = attrJson.optString("access", "PRIVATE").toUpperCase();
-                    String attrType = attrJson.optString("type", "Object");
-
-                    MetamodelFactory.createAttr(
-                            fullPath + "." + attrName,
-                            safeAccess(attrAccess),
-                            attrType,
-                            newClass
-                    );
+                if (!inString) {
+                    if (ch == '{' || ch == '[') stack.push(ch);
+                    else if (ch == '}' && !stack.isEmpty() && stack.peek() == '{') stack.pop();
+                    else if (ch == ']' && !stack.isEmpty() && stack.peek() == '[') stack.pop();
                 }
             }
 
-            // Parse Relationships
-            if (root.has("relationships")) {
-                JSONArray rels = root.getJSONArray("relationships");
-                for (int i = 0; i < rels.length(); i++) {
-                    JSONObject relJson = rels.getJSONObject(i);
-                    String target = relJson.getString("target");
-                    String relTypeStr = relJson.getString("type").toUpperCase();
+            StringBuilder sb = new StringBuilder(sanitized);
+            while (!stack.isEmpty()) {
+                char open = stack.pop();
+                sb.append(open == '{' ? "}" : "]");
+            }
+            sanitized = sb.toString();
 
-                    MetamodelFactory.createRelationship(newClass, target, safeRelType(relTypeStr));
+            JSONObject root = new JSONObject(sanitized);
+
+            // 3. FLEXIBLE SEARCHING
+            JSONObject systemObj = root.has("System") ? root.getJSONObject("System") : root.optJSONObject("system");
+            if (systemObj == null) systemObj = root;
+
+            // 4. FIND CLASSES AND PACKAGES
+            if (systemObj.has("packages")) {
+                JSONArray packs = systemObj.getJSONArray("packages");
+                processPackages(packs, currentSys);
+
+                if ((systemObj.has("classes") || systemObj.has("Classes")) && !currentSys.getPacks().isEmpty()) {
+                    String classKey = systemObj.has("classes") ? "classes" : "Classes";
+                    processClasses(systemObj.getJSONArray(classKey), currentSys.getPacks().get(0));
                 }
             }
 
-            // Parse  Constraints
-            if (root.has("constraints")) {
-                JSONArray ocls = root.getJSONArray("constraints");
-                for (int i = 0; i < ocls.length(); i++) {
-                    newClass.addConstraint(ocls.getString(i));
-                }
+            if (root.has("classes") || root.has("Classes") || systemObj.has("classes") || systemObj.has("Classes")) {
+                String classKey = root.has("Classes") ? "Classes" : (root.has("classes") ? "classes" : (systemObj.has("Classes") ? "Classes" : "classes"));
+                JSONArray classesArray = root.has(classKey) ? root.getJSONArray(classKey) : systemObj.getJSONArray(classKey);
+
+                Pack defaultPack = currentSys.getPacks().isEmpty() ? MetamodelFactory.createPack("default", currentSys) : currentSys.getPacks().get(0);
+                processClasses(classesArray, defaultPack);
+            }
+            else if (systemObj.has("fields") || systemObj.has("Fields")) {
+                String packageName = systemObj.optString("package", systemObj.optString("Package", "default"));
+                Pack targetPack = MetamodelFactory.createPack(packageName, currentSys);
+
+                String className = systemObj.optString("name", systemObj.optString("className", "UnknownClass"));
+                C newClass = MetamodelFactory.createClass(className, AccessModifier.PUBLIC, ClassType.CLASS, targetPack);
+
+                String fKey = systemObj.has("fields") ? "fields" : "Fields";
+                processFields(systemObj.getJSONArray(fKey), newClass);
+
+                String mKey = systemObj.has("methods") ? "methods" : "Methods";
+                if (systemObj.has(mKey)) processMethods(systemObj.getJSONArray(mKey), newClass);
             }
 
         } catch (Exception e) {
-            System.err.println("Error parsing ai for system '" + system.getName() + "': " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Robust Parser failed to recover AI output: " + e.getMessage());
         }
     }
 
-    private Pack getOrCreatePackageHierarchy(String fullClassName, Sys system) {
-        String[] parts = fullClassName.split("\\.");
+    private void processPackages(JSONArray packages, Sys system) {
+        for (int i = 0; i < packages.length(); i++) {
+            JSONObject pkgObj = packages.getJSONObject(i);
+            Pack pkg = MetamodelFactory.createPack(pkgObj.optString("name", "default"), system);
 
-        if (parts.length <= 1) {
-            return getOrCreateRootPackage("default", system);
+            if (pkgObj.has("classes")) {
+                processClasses(pkgObj.getJSONArray("classes"), pkg);
+            }
         }
+    }
 
-        List<Pack> currentLevelPacks = system.getPacks();
-        Pack currentPack = null;
-        String currentPath = "";
+    private void processClasses(JSONArray classes, Pack pkg) {
+        for (int i = 0; i < classes.length(); i++) {
+            JSONObject classObj = classes.getJSONObject(i);
+            String className = classObj.has("name") ? classObj.getString("name") : classObj.optString("Name", "UnknownClass");
 
-        // Iterate parts, stopping before the Class Name
-        for (int i = 0; i < parts.length - 1; i++) {
-            String pName = parts[i];
-            currentPath = (currentPath.isEmpty()) ? pName : currentPath + "." + pName;
+            C newClass = MetamodelFactory.createClass(className, AccessModifier.PUBLIC, ClassType.CLASS, pkg);
 
-            Pack found = null;
-            for (Pack p : currentLevelPacks) {
-                if (p.getName().equals(currentPath)) {
-                    found = p;
-                    break;
-                }
+            String fieldKey = classObj.has("fields") ? "fields" : (classObj.has("Fields") ? "Fields" : null);
+            if (fieldKey != null) {
+                processFields(classObj.getJSONArray(fieldKey), newClass);
             }
 
-            if (found == null) {
-                found = new Pack(currentPath);
-                currentLevelPacks.add(found);
+            String methodKey = classObj.has("methods") ? "methods" : (classObj.has("Methods") ? "Methods" : null);
+            if (methodKey != null) {
+                processMethods(classObj.getJSONArray(methodKey), newClass);
             }
-
-            currentPack = found;
-            currentLevelPacks = currentPack.getPacks();
         }
-
-        return currentPack;
     }
 
-    // Helper to force a package if one doesn't exist
-    private Pack getOrCreateRootPackage(String pkgName, Sys system) {
-        for (Pack p : system.getPacks()) {
-            if (p.getName().equals(pkgName)) return p;
+    private void processFields(JSONArray fields, C clazz) {
+        for (int i = 0; i < fields.length(); i++) {
+            JSONObject f = fields.getJSONObject(i);
+            String name = f.optString("name", "attr" + i);
+            String type = f.optString("type", "String");
+
+            String accessStr = f.optString("access", "PRIVATE");
+            // CRITICAL FIX: Pass PRIVATE as the safety fallback
+            AccessModifier access = safeAccess(accessStr, AccessModifier.PRIVATE);
+
+            MetamodelFactory.createAttr(name, access, type, clazz);
         }
-        Pack newPack = new Pack(pkgName);
-        system.getPacks().add(newPack);
-        return newPack;
     }
 
-    private AccessModifier safeAccess(String s) {
-        try { return AccessModifier.valueOf(s); } catch (Exception e) { return AccessModifier.PUBLIC; }
+    private void processMethods(JSONArray methods, C clazz) {
+        for (int i = 0; i < methods.length(); i++) {
+            JSONObject m = methods.getJSONObject(i);
+            String name = m.optString("name", "method" + i);
+
+            String accessStr = m.optString("access", "PUBLIC");
+            // CRITICAL FIX: Pass PUBLIC as the safety fallback
+            AccessModifier access = safeAccess(accessStr, AccessModifier.PUBLIC);
+
+            MetamodelFactory.createMet(name, access, clazz);
+        }
+    }
+
+    // CRITICAL FIX: Now accepts a default fallback so Fields don't accidentally become Public on parse errors
+    private AccessModifier safeAccess(String s, AccessModifier defaultModifier) {
+        if (s == null || s.trim().isEmpty() || s.equalsIgnoreCase("null")) {
+            return defaultModifier;
+        }
+        try {
+            return AccessModifier.valueOf(s.toUpperCase());
+        } catch (Exception e) {
+            return defaultModifier;
+        }
     }
 
     private ClassType safeType(String s) {
-        try { return ClassType.valueOf(s); } catch (Exception e) { return ClassType.CLASS; }
-    }
-
-    private RelationshipType safeRelType(String s) {
-        if (s.equals("EXTENDS")) return RelationshipType.INHERITANCE;
-        if (s.equals("IMPLEMENTS")) return RelationshipType.REALIZATION;
-        try { return RelationshipType.valueOf(s); } catch (Exception e) { return RelationshipType.ASSOCIATION; }
+        try { return ClassType.valueOf(s.toUpperCase()); } catch (Exception e) { return ClassType.CLASS; }
     }
 }

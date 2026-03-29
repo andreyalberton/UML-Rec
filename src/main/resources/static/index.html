@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI UML Vector Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 min-h-screen flex items-center justify-center font-sans">
+
+<div class="bg-white p-10 rounded-2xl shadow-2xl max-w-lg w-full text-center border border-slate-100">
+    <div class="mb-6 flex justify-center">
+            <span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+                Stateless Vector Engine
+            </span>
+    </div>
+
+    <h1 class="text-3xl font-extrabold text-slate-800 mb-2 tracking-tight">Java to SVG</h1>
+    <p class="text-slate-500 mb-8 text-sm px-4">Generate vector diagrams. Download and import directly into Draw.io for editing.</p>
+
+    <!-- Drag and Drop Zone -->
+    <div id="drop-zone" class="border-4 border-dashed border-blue-200 rounded-2xl p-12 bg-blue-50/30 hover:bg-blue-50 transition-all cursor-pointer relative group">
+        <input type="file" id="fileInput" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept=".java">
+        <div class="transform group-hover:scale-110 transition-transform duration-300">
+            <svg class="mx-auto h-16 w-16 text-blue-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+            </svg>
+        </div>
+        <p class="text-lg font-semibold text-blue-900">Drop your .java file</p>
+        <p class="text-xs text-blue-400 mt-2 font-mono" id="fileNameDisplay">Waiting for input...</p>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loading" class="hidden mt-8">
+        <div class="flex flex-col items-center">
+            <div class="w-10 h-10 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin mb-4"></div>
+            <p class="text-slate-600 font-medium text-sm">Analysing with Ollama...</p>
+        </div>
+    </div>
+
+    <button id="uploadBtn" class="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg transform transition active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed uppercase text-sm tracking-widest" disabled>
+        Generate SVG
+    </button>
+
+    <div class="mt-8 pt-6 border-t border-slate-50 flex justify-between items-center text-[10px] text-slate-400 font-bold uppercase">
+        <span>LJMU Project 2026</span>
+        <span>v2.0 Stateless</span>
+    </div>
+</div>
+
+<script>
+    const fileInput = document.getElementById('fileInput');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const loading = document.getElementById('loading');
+    let selectedFile = null;
+
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            selectedFile = e.target.files[0];
+            fileNameDisplay.textContent = selectedFile.name;
+            uploadBtn.disabled = false;
+        }
+    });
+
+    uploadBtn.addEventListener('click', async () => {
+        if (!selectedFile) return;
+
+        uploadBtn.disabled = true;
+        uploadBtn.classList.add('hidden');
+        loading.classList.remove('hidden');
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        try {
+            const response = await fetch('/api/uml/generate', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+
+                // Name it .svg for high-quality vector output
+                const downloadName = selectedFile.name.replace('.java', '') + '_diagram.svg';
+                a.download = downloadName;
+
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            } else {
+                alert('Error generating SVG. Make sure Ollama is running Mistral locally.');
+            }
+        } catch (error) {
+            console.error('Connection error:', error);
+            alert('Connection to server failed. Is your Spring Boot app running on port 8080?');
+        } finally {
+            uploadBtn.disabled = false;
+            uploadBtn.classList.remove('hidden');
+            loading.classList.add('hidden');
+        }
+    });
+
+    // Visual Drag & Drop feedback
+    const dropZone = document.getElementById('drop-zone');
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => dropZone.classList.add('bg-blue-100'), false);
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => dropZone.classList.remove('bg-blue-100'), false);
+    });
+</script>
+</body>
+</html>
