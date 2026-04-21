@@ -30,7 +30,7 @@ class MetamodelTest {
 
     @Test
     void testStudentSystemHierarchy() {
-        // The canonical example from the spec: a UniversitySystem with
+        // The example from the spec: a UniversitySystem with
         // a people package and a nested people.students sub-package,
         // with Student inheriting from Person.
         Sys sys = new Sys("UniversitySystem");
@@ -61,8 +61,7 @@ class MetamodelTest {
 
     @Test
     void testEmptySystemHasNoPackages() {
-        // A freshly created Sys should have an empty (not null) package list.
-        // This protects against NPEs in downstream serialisers.
+        // A freshly created Sys should have an empty package list.
         Sys sys = new Sys("Empty");
         assertNotNull(sys.getPacks(), "packs list must be initialised, not null");
         assertTrue(sys.getPacks().isEmpty(), "a brand new Sys has no packages yet");
@@ -84,7 +83,7 @@ class MetamodelTest {
 
     @Test
     void testNestedPackagesArePreserved() {
-        // Packs should nest recursively — a.b.c must survive three levels deep.
+        // Packs should nest recursively
         Sys sys = new Sys("Nested");
         Pack a = new Pack("a");
         Pack b = new Pack("a.b");
@@ -140,7 +139,7 @@ class MetamodelTest {
     @Test
     void testMethodReturnDefaultsToEmptyNotNull() {
         // New methods must come with a non-null empty Ret so XML/UML
-        // renderers don't have to special-case void-returning methods.
+        // renderers don't have to special void returning methods.
         Met m = new Met("doStuff", AccessModifier.PUBLIC);
         assertNotNull(m.getRet(), "Ret must be initialised in constructor");
         assertTrue(m.getRet().getCName().isEmpty());
@@ -174,8 +173,7 @@ class MetamodelTest {
 
     @Test
     void testAllRelationshipTypesAreDistinct() {
-        // Safety net against accidental enum collapse — the six types
-        // from the spec must all exist and be unique.
+        // Safety net against accidental enum issues — the six types
         RelationshipType[] all = RelationshipType.values();
         assertEquals(6, all.length, "spec defines exactly 6 relationship types");
     }

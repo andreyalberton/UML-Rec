@@ -4,33 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a5080b6-ec90-485b-a47e-bf97df621845" name="Changes" comment="v1.4.1">
+    <list default="true" id="0a5080b6-ec90-485b-a47e-bf97df621845" name="Changes" comment="- Replaced Python-based AI inference with OllamaAdapter using HTTP client&#10;- Moved from local folder scanning to web UI with drag-and-drop file/ZIP upload&#10;- Added ProjectAnalyzer for multi-file analysis with cross-file relationship detection&#10;- Added MermaidGenerator for SVG output and XmlExporter for metamodel XML&#10;- Built web interface with progress bar, cancel button, and XML export">
+      <change afterPath="$PROJECT_DIR$/img.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/UMLWebApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/UMLWebApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/OllamaAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/OllamaAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/RelationshipDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/RelationshipDefinition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/SourceCodeParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/SourceCodeParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/MetamodelFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/MetamodelFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/SyntheticDataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/SyntheticDataGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/AccessModifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/AccessModifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Attr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Attr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/C.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/C.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/ClassType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/ClassType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Local.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Local.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Met.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Met.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Pack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Pack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Par.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Par.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/RelationshipType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/RelationshipType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Ret.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Ret.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Sys.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Sys.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/URel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/URel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/MermaidGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/MermaidGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/UMLWebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/UMLWebController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dataset/Bank/test2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dataset/test/user.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/dataset/uni/test3.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/MetamodelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/MetamodelTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/ProjectCwApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/ProjectCwApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/training_data.jsonl" beforeDir="false" afterPath="$PROJECT_DIR$/training_data.jsonl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,7 +223,7 @@
       <workItem from="1776715792883" duration="1884000" />
       <workItem from="1776761896859" duration="853000" />
       <workItem from="1776765237795" duration="31000" />
-      <workItem from="1776765335096" duration="4891000" />
+      <workItem from="1776765335096" duration="6364000" />
     </task>
     <task id="LOCAL-00001" summary="Maven Setup">
       <option name="closed" value="true" />
@@ -307,7 +289,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774796856321</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="- Replaced Python-based AI inference with OllamaAdapter using HTTP client&#10;- Moved from local folder scanning to web UI with drag-and-drop file/ZIP upload&#10;- Added ProjectAnalyzer for multi-file analysis with cross-file relationship detection&#10;- Added MermaidGenerator for SVG output and XmlExporter for metamodel XML&#10;- Built web interface with progress bar, cancel button, and XML export">
+      <option name="closed" value="true" />
+      <created>1776777096368</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1776777096368</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,6 +329,7 @@
     <MESSAGE value="v1.2 Java System Metamodel Generator" />
     <MESSAGE value="v1.3 Java System Metamodel Generator" />
     <MESSAGE value="v1.4.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="v1.4.1" />
+    <MESSAGE value="- Replaced Python-based AI inference with OllamaAdapter using HTTP client&#10;- Moved from local folder scanning to web UI with drag-and-drop file/ZIP upload&#10;- Added ProjectAnalyzer for multi-file analysis with cross-file relationship detection&#10;- Added MermaidGenerator for SVG output and XmlExporter for metamodel XML&#10;- Built web interface with progress bar, cancel button, and XML export" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Replaced Python-based AI inference with OllamaAdapter using HTTP client&#10;- Moved from local folder scanning to web UI with drag-and-drop file/ZIP upload&#10;- Added ProjectAnalyzer for multi-file analysis with cross-file relationship detection&#10;- Added MermaidGenerator for SVG output and XmlExporter for metamodel XML&#10;- Built web interface with progress bar, cancel button, and XML export" />
   </component>
 </project>
