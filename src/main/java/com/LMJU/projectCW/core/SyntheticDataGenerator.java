@@ -5,20 +5,40 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Used at the start of development to generate the 500-example JSONL training dataset.
+ *
+ * The idea: you can't find a dataset of messy Java code paired with
+ * correct JSON metamodel output on the internet, so we make our own.
+ * Each example is a random Java system with intentional problems
+ * (misleading comments, weird formatting, fake annotations) paired
+ * with the correct JSON that the AI should produce.
+ *
+ * This was used to inform the prompt engineering rules — by studying
+ * which examples tripped the model up, we figured out which rules
+ * to add to the prompt.
+ */
 public class SyntheticDataGenerator {
 
-    // Expanded pools for variety
+    // Pools of realistic names so the generated code looks plausible
     private static final String[] SYSTEMS = {"ECommerce", "Hospital", "School", "Library", "Bank", "Airline", "Logistics", "SocialMedia"};
     private static final String[] PACKAGES = {"core", "auth", "data", "utils", "model", "service", "controller", "legacy"};
     private static final String[] CLASSES = {"User", "Order", "Product", "Payment", "Patient", "Doctor", "Book", "Flight", "Manager", "Report"};
     private static final String[] TYPES = {"String", "int", "boolean", "double", "Date", "float", "long", "BigDecimal"};
     private static final String[] VERBS = {"calculate", "validate", "process", "fetch", "update", "delete", "create", "sync"};
 
+    // Run this to regenerate the dataset — outputs training_data.jsonl
     public static void main(String[] args) {
-        // Generate 500 examples
         generateDataset(500);
     }
 
+    /**
+     * Main generation loop. For each example:
+     *   1) build a random metamodel (Sys -> Pack -> C -> Attr/Met)
+     *   2) render it as messy Java code (the "input" the AI will see)
+     *   3) render it as clean JSON (the "output" the AI should produce)
+     *   4) write both as one JSONL line
+     */
     public static void generateDataset(int count) {
         try (FileWriter writer = new FileWriter("training_data.jsonl")) {
             Random rand = new Random();
@@ -27,16 +47,11 @@ public class SyntheticDataGenerator {
                 String sysName = SYSTEMS[rand.nextInt(SYSTEMS.length)] + "_" + i;
                 Sys system = MetamodelFactory.createSys(sysName);
 
-                // Populate with data
                 generateRandomContent(system, rand);
 
-                // input: Generate Java systems
                 String inputJava = generateChaoticJavaSource(system, rand);
-
-                // output: Generate JSON
                 String outputJson = generateJsonString(system);
 
-                // write to file
                 String jsonL = String.format("{\"instruction\": \"Analyse the Java code. Extract the architecture to strict JSON.\", \"input\": \"%s\", \"output\": %s}\n",
                         escapeJson(inputJava), outputJson);
                 writer.write(jsonL);
@@ -48,6 +63,8 @@ public class SyntheticDataGenerator {
         }
     }
 
+    // Fills the system with random packages, classes, fields, methods,
+    // and at least one relationship if there are multiple classes
     private static void generateRandomContent(Sys system, Random rand) {
         int packCount = rand.nextInt(3) + 1;
         List<C> allClasses = new ArrayList<>();
@@ -80,7 +97,9 @@ public class SyntheticDataGenerator {
         }
     }
 
-    // the engine: Generates normal Java
+    // Turns a clean metamodel into intentionally messy Java source code.
+    // Adds random annotations, misleading comments, fake method bodies —
+    // all the things that confuse a traditional parsers.
     private static String generateChaoticJavaSource(Sys system, Random rand) {
         StringBuilder sb = new StringBuilder();
 
@@ -140,7 +159,8 @@ public class SyntheticDataGenerator {
         return sb.toString();
     }
 
-    //  Helper: Convert Objects to JSON
+    // Converts the metamodel to the JSON format the AI should output.
+    // This is the ground truth — always correct, even when the Java code is messy.
     private static String generateJsonString(Sys sys) {
         StringBuilder sb = new StringBuilder();
         sb.append("{ \"System\": { \"name\": \"").append(sys.getName()).append("\", \"packages\": [");

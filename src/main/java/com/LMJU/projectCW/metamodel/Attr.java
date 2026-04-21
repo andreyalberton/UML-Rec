@@ -3,12 +3,19 @@ package com.LMJU.projectCW.metamodel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class field / attribute.
+ * The type info is split into three lists following the spec:
+ *   cName  — user-defined class names referenced in the type (e.g. "Student")
+ *   dName  — data structure names (e.g. "List", "Map")
+ *   inName — instantiation expressions (e.g. "new ArrayList()")
+ */
 public class Attr {
     private String name;
     private AccessModifier access;
-    private List<String> cName;  // User-defined classes in datatype
-    private List<String> dName;  // Data structures
-    private List<String> inName; // Instantiations
+    private List<String> cName;
+    private List<String> dName;
+    private List<String> inName;
 
     public Attr(String name, AccessModifier access) {
         this.name = name;

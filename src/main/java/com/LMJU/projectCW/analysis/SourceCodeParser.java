@@ -7,14 +7,32 @@ import org.json.JSONObject;
 
 import java.util.Stack;
 
+/**
+ * Turns the AI's raw JSON output into metamodel objects.
+ *
+ * This is the defensive layer — the AI's output is almost never perfect, so
+ * we fix common formatting issues (single quotes, missing brackets,
+ * null values) before trying to parse it. If something still breaks,
+ * we log it and move on rather than crashing the whole batch.
+ *
+ * The parser is also flexible about key names — it checks for both
+ * "classes" and "Classes", "fields" and "Fields", etc. because the
+ * AI isn't always consistent with capitalisation.
+ */
 public class SourceCodeParser {
 
+    /**
+     * Parse the AI's JSON and add whatever we can recover to the system.
+     * This method never throws — worst case it logs an error and returns.
+     */
     public void parseAndAddToSystem(String jsonOutput, Sys currentSys) {
         try {
-            // 1. FIX FORMATTING
+            // Step 1: basic string fixes (single quotes, null literals)
             String sanitized = jsonOutput.replace("'", "\"").replace(": null", ": \"void\"");
 
-            // 2. BULLETPROOF JSON REPAIR
+            // Step 2: stack-based bracket repair
+            // Walk through the string tracking open brackets. If any are
+            // still open at the end, close them so the JSON parser doesn't break.
             Stack<Character> stack = new Stack<>();
             boolean inString = false;
             for (int i = 0; i < sanitized.length(); i++) {
@@ -37,11 +55,11 @@ public class SourceCodeParser {
 
             JSONObject root = new JSONObject(sanitized);
 
-            // 3. FLEXIBLE SEARCHING
+            // Step 3: find the system object — AI sometimes uses "System" or "system" or just puts classes at root
             JSONObject systemObj = root.has("System") ? root.getJSONObject("System") : root.optJSONObject("system");
             if (systemObj == null) systemObj = root;
 
-            // 4. FIND CLASSES AND PACKAGES
+            // Step 4: find and process packages and classes wherever they are
             if (systemObj.has("packages")) {
                 JSONArray packs = systemObj.getJSONArray("packages");
                 processPackages(packs, currentSys);
@@ -105,6 +123,12 @@ public class SourceCodeParser {
             if (methodKey != null) {
                 processMethods(classObj.getJSONArray(methodKey), newClass);
             }
+
+            // Parse relationships if present
+            String relKey = classObj.has("relationships") ? "relationships" : (classObj.has("Relationships") ? "Relationships" : null);
+            if (relKey != null) {
+                processRelationships(classObj.getJSONArray(relKey), newClass);
+            }
         }
     }
 
@@ -115,7 +139,7 @@ public class SourceCodeParser {
             String type = f.optString("type", "String");
 
             String accessStr = f.optString("access", "PRIVATE");
-            // CRITICAL FIX: Pass PRIVATE as the safety fallback
+            // Fields default to PRIVATE if the AI doesn't specify
             AccessModifier access = safeAccess(accessStr, AccessModifier.PRIVATE);
 
             MetamodelFactory.createAttr(name, access, type, clazz);
@@ -128,14 +152,14 @@ public class SourceCodeParser {
             String name = m.optString("name", "method" + i);
 
             String accessStr = m.optString("access", "PUBLIC");
-            // CRITICAL FIX: Pass PUBLIC as the safety fallback
+            // Methods default to PUBLIC if not specified
             AccessModifier access = safeAccess(accessStr, AccessModifier.PUBLIC);
 
             MetamodelFactory.createMet(name, access, clazz);
         }
     }
 
-    // CRITICAL FIX: Now accepts a default fallback so Fields don't accidentally become Public on parse errors
+    // Safely parse an access modifier string
     private AccessModifier safeAccess(String s, AccessModifier defaultModifier) {
         if (s == null || s.trim().isEmpty() || s.equalsIgnoreCase("null")) {
             return defaultModifier;
@@ -149,5 +173,27 @@ public class SourceCodeParser {
 
     private ClassType safeType(String s) {
         try { return ClassType.valueOf(s.toUpperCase()); } catch (Exception e) { return ClassType.CLASS; }
+    }
+
+    private void processRelationships(JSONArray relationships, C clazz) {
+        for (int i = 0; i < relationships.length(); i++) {
+            try {
+                JSONObject rel = relationships.getJSONObject(i);
+                String target = rel.optString("target", rel.optString("targetClass", rel.optString("to", "")));
+                String typeStr = rel.optString("type", rel.optString("relationType", "ASSOCIATION"));
+
+                if (!target.isEmpty()) {
+                    RelationshipType relType;
+                    try {
+                        relType = RelationshipType.valueOf(typeStr.toUpperCase());
+                    } catch (Exception e) {
+                        relType = RelationshipType.ASSOCIATION;
+                    }
+                    MetamodelFactory.createRelationship(clazz, target, relType);
+                }
+            } catch (Exception e) {
+                System.err.println("Skipping malformed relationship: " + e.getMessage());
+            }
+        }
     }
 }

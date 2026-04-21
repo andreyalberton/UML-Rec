@@ -3,6 +3,10 @@ package com.LMJU.projectCW.metamodel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A method parameter.
+ * Same type-decomposition idea as Attr: cName for class refs, dName for data structures.
+ */
 public class Par {
     private String name;
     private List<String> cName;

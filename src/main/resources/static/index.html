@@ -16,7 +16,17 @@
     </div>
 
     <h1 class="text-3xl font-extrabold text-slate-800 mb-2 tracking-tight">Java to SVG</h1>
-    <p class="text-slate-500 mb-8 text-sm px-4">Generate vector diagrams. Download and import directly into Draw.io for editing.</p>
+    <p class="text-slate-500 mb-6 text-sm px-4">Generate vector diagrams from single files or entire projects. Download and import directly into Draw.io.</p>
+
+    <!-- Mode Toggle -->
+    <div class="flex bg-slate-100 rounded-xl p-1 mb-8">
+        <button id="singleMode" class="flex-1 py-2 px-4 rounded-lg text-xs font-bold uppercase tracking-wider transition-all bg-white text-slate-800 shadow-sm" onclick="switchMode('single')">
+            Single File
+        </button>
+        <button id="projectMode" class="flex-1 py-2 px-4 rounded-lg text-xs font-bold uppercase tracking-wider transition-all text-slate-500" onclick="switchMode('project')">
+            Project (ZIP)
+        </button>
+    </div>
 
     <!-- Drag and Drop Zone -->
     <div id="drop-zone" class="border-4 border-dashed border-blue-200 rounded-2xl p-12 bg-blue-50/30 hover:bg-blue-50 transition-all cursor-pointer relative group">
@@ -26,7 +36,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
             </svg>
         </div>
-        <p class="text-lg font-semibold text-blue-900">Drop your .java file</p>
+        <p class="text-lg font-semibold text-blue-900" id="dropLabel">Drop your .java file</p>
         <p class="text-xs text-blue-400 mt-2 font-mono" id="fileNameDisplay">Waiting for input...</p>
     </div>
 
@@ -34,7 +44,19 @@
     <div id="loading" class="hidden mt-8">
         <div class="flex flex-col items-center">
             <div class="w-10 h-10 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin mb-4"></div>
-            <p class="text-slate-600 font-medium text-sm">Analysing with Ollama...</p>
+            <p class="text-slate-600 font-medium text-sm" id="loadingText">Analysing with Ollama...</p>
+            <p class="text-xs text-slate-400 mt-1 mb-4" id="loadingSubText"></p>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                <div id="progressBar" class="bg-blue-600 h-full rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+            </div>
+            <p class="text-[10px] text-slate-400 mt-2 font-mono tracking-wider" id="progressPercent">0%</p>
+
+            <!-- Cancel Button -->
+            <button id="cancelBtn" class="mt-5 px-6 py-2 rounded-lg text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-red-600 hover:bg-red-50 transition-all border border-slate-200 hover:border-red-200">
+                Cancel
+            </button>
         </div>
     </div>
 
@@ -42,9 +64,13 @@
         Generate SVG
     </button>
 
+    <button id="xmlBtn" class="mt-3 w-full bg-white hover:bg-slate-50 text-slate-700 font-bold py-3 px-6 rounded-xl border border-slate-200 shadow-sm transform transition active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed uppercase text-xs tracking-widest" disabled>
+        Export Metamodel XML
+    </button>
+
     <div class="mt-8 pt-6 border-t border-slate-50 flex justify-between items-center text-[10px] text-slate-400 font-bold uppercase">
         <span>LJMU Project 2026</span>
-        <span>v2.0 Stateless</span>
+        <span>v3.0 Project Mode</span>
     </div>
 </div>
 
@@ -52,57 +78,229 @@
     const fileInput = document.getElementById('fileInput');
     const fileNameDisplay = document.getElementById('fileNameDisplay');
     const uploadBtn = document.getElementById('uploadBtn');
+    const xmlBtn = document.getElementById('xmlBtn');
     const loading = document.getElementById('loading');
+    const loadingText = document.getElementById('loadingText');
+    const loadingSubText = document.getElementById('loadingSubText');
+    const dropLabel = document.getElementById('dropLabel');
+    const progressBar = document.getElementById('progressBar');
+    const progressPercent = document.getElementById('progressPercent');
+    const cancelBtn = document.getElementById('cancelBtn');
     let selectedFile = null;
+    let currentMode = 'single';
+    let currentAbortController = null;
+
+    // Progress Controller — advances through named phases at a calibrated pace.
+    // Designed so a real SSE backend can replace the timer later without touching the UI.
+    const ProgressController = {
+        timer: null,
+        current: 0,
+        target: 0,
+
+        // Phases: [targetPercent, label, subLabel, msToReachTarget]
+        singlePhases: [
+            [10,  'Uploading file...',          'Sending to server',                    800],
+            [30,  'Parsing Java source...',     'Reading class structure',             1500],
+            [80,  'Analysing with Mistral...',  'Local AI extracting metamodel',      12000],
+            [95,  'Rendering diagram...',       'Building vector output',              1500]
+        ],
+        projectPhases: [
+            [5,   'Uploading project...',       'Transferring ZIP archive',            1000],
+            [15,  'Extracting project files...','Scanning for .java sources',          1500],
+            [80,  'Analysing with Mistral...',  'Processing each class via local AI', 30000],
+            [90,  'Resolving relationships...', 'Linking cross-file references',       2000],
+            [95,  'Rendering diagram...',       'Building unified vector output',      1500]
+        ],
+
+        start(mode) {
+            this.reset();
+            const phases = mode === 'project' ? this.projectPhases : this.singlePhases;
+            this._runPhases(phases, 0);
+        },
+
+        _runPhases(phases, index) {
+            if (index >= phases.length) return;
+            const [target, label, subLabel, duration] = phases[index];
+            loadingText.textContent = label;
+            loadingSubText.textContent = subLabel;
+            this._animateTo(target, duration, () => {
+                this._runPhases(phases, index + 1);
+            });
+        },
+
+        _animateTo(target, duration, onComplete) {
+            const start = this.current;
+            const delta = target - start;
+            const startTime = performance.now();
+
+            const step = () => {
+                const elapsed = performance.now() - startTime;
+                const t = Math.min(elapsed / duration, 1);
+                // Ease-out cubic for a natural feel
+                const eased = 1 - Math.pow(1 - t, 3);
+                this.current = start + (delta * eased);
+                this._render();
+                if (t < 1) {
+                    this.timer = requestAnimationFrame(step);
+                } else {
+                    if (onComplete) onComplete();
+                }
+            };
+            this.timer = requestAnimationFrame(step);
+        },
+
+        complete() {
+            if (this.timer) cancelAnimationFrame(this.timer);
+            this.current = 100;
+            loadingText.textContent = 'Done!';
+            loadingSubText.textContent = 'Your diagram is ready';
+            this._render();
+        },
+
+        fail() {
+            if (this.timer) cancelAnimationFrame(this.timer);
+            loadingText.textContent = 'Failed';
+            loadingSubText.textContent = 'Check Ollama is running';
+            progressBar.classList.remove('bg-blue-600');
+            progressBar.classList.add('bg-red-500');
+        },
+
+        reset() {
+            if (this.timer) cancelAnimationFrame(this.timer);
+            this.current = 0;
+            this.target = 0;
+            progressBar.classList.remove('bg-red-500');
+            progressBar.classList.add('bg-blue-600');
+            this._render();
+        },
+
+        _render() {
+            const pct = Math.round(this.current);
+            progressBar.style.width = pct + '%';
+            progressPercent.textContent = pct + '%';
+        }
+    };
+
+    function switchMode(mode) {
+        currentMode = mode;
+        const singleBtn = document.getElementById('singleMode');
+        const projectBtn = document.getElementById('projectMode');
+
+        if (mode === 'single') {
+            singleBtn.classList.add('bg-white', 'text-slate-800', 'shadow-sm');
+            singleBtn.classList.remove('text-slate-500');
+            projectBtn.classList.remove('bg-white', 'text-slate-800', 'shadow-sm');
+            projectBtn.classList.add('text-slate-500');
+            fileInput.accept = '.java';
+            dropLabel.textContent = 'Drop your .java file';
+        } else {
+            projectBtn.classList.add('bg-white', 'text-slate-800', 'shadow-sm');
+            projectBtn.classList.remove('text-slate-500');
+            singleBtn.classList.remove('bg-white', 'text-slate-800', 'shadow-sm');
+            singleBtn.classList.add('text-slate-500');
+            fileInput.accept = '.zip';
+            dropLabel.textContent = 'Drop your project .zip file';
+        }
+
+        // Reset file selection
+        selectedFile = null;
+        fileNameDisplay.textContent = 'Waiting for input...';
+        uploadBtn.disabled = true;
+        xmlBtn.disabled = true;
+    }
 
     fileInput.addEventListener('change', (e) => {
         if (e.target.files.length > 0) {
             selectedFile = e.target.files[0];
             fileNameDisplay.textContent = selectedFile.name;
             uploadBtn.disabled = false;
+            xmlBtn.disabled = false;
         }
     });
 
-    uploadBtn.addEventListener('click', async () => {
+    // Shared submit handler used by both the SVG and XML buttons.
+    // kind is 'svg' or 'xml' — everything else (endpoint, filename suffix)
+    // is derived from that plus the current mode.
+    async function submitFile(kind) {
         if (!selectedFile) return;
 
+        const isProject = currentMode === 'project';
+        let endpoint, suffix;
+        if (kind === 'xml') {
+            endpoint = '/api/uml/export-xml';
+            suffix = '_metamodel.xml';
+        } else {
+            endpoint = isProject ? '/api/uml/generate-project' : '/api/uml/generate';
+            suffix = isProject ? '_project_diagram.svg' : '_diagram.svg';
+        }
+
         uploadBtn.disabled = true;
+        xmlBtn.disabled = true;
         uploadBtn.classList.add('hidden');
+        xmlBtn.classList.add('hidden');
         loading.classList.remove('hidden');
+
+        ProgressController.start(isProject ? 'project' : 'single');
+        currentAbortController = new AbortController();
 
         const formData = new FormData();
         formData.append('file', selectedFile);
 
         try {
-            const response = await fetch('/api/uml/generate', {
+            const response = await fetch(endpoint, {
                 method: 'POST',
-                body: formData
+                body: formData,
+                signal: currentAbortController.signal
             });
 
             if (response.ok) {
                 const blob = await response.blob();
+                ProgressController.complete();
+                await new Promise(r => setTimeout(r, 400));
+
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.style.display = 'none';
                 a.href = url;
 
-                // Name it .svg for high-quality vector output
-                const downloadName = selectedFile.name.replace('.java', '') + '_diagram.svg';
-                a.download = downloadName;
+                const baseName = selectedFile.name.replace('.java', '').replace('.zip', '');
+                a.download = baseName + suffix;
 
                 document.body.appendChild(a);
                 a.click();
                 window.URL.revokeObjectURL(url);
             } else {
-                alert('Error generating SVG. Make sure Ollama is running Mistral locally.');
+                ProgressController.fail();
+                await new Promise(r => setTimeout(r, 800));
+                alert('Error generating output. Make sure Ollama is running Mistral locally.');
             }
         } catch (error) {
-            console.error('Connection error:', error);
-            alert('Connection to server failed. Is your Spring Boot app running on port 8080?');
+            if (error.name === 'AbortError') {
+                console.log('Request cancelled by user');
+            } else {
+                console.error('Connection error:', error);
+                ProgressController.fail();
+                await new Promise(r => setTimeout(r, 800));
+                alert('Connection to server failed. Is your Spring Boot app running on port 8080?');
+            }
         } finally {
+            currentAbortController = null;
             uploadBtn.disabled = false;
+            xmlBtn.disabled = false;
             uploadBtn.classList.remove('hidden');
+            xmlBtn.classList.remove('hidden');
             loading.classList.add('hidden');
+            ProgressController.reset();
+        }
+    }
+
+    uploadBtn.addEventListener('click', () => submitFile('svg'));
+    xmlBtn.addEventListener('click', () => submitFile('xml'));
+
+    // Cancel button — aborts the current fetch request
+    cancelBtn.addEventListener('click', () => {
+        if (currentAbortController) {
+            currentAbortController.abort();
         }
     });
 

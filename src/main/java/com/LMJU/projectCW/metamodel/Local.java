@@ -3,6 +3,10 @@ package com.LMJU.projectCW.metamodel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A local variable declared inside a method body.
+ * Same shape as Par — just cName and dName for the type info.
+ */
 public class Local {
     private String name;
     private List<String> cName;

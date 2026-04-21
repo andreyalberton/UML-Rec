@@ -5,7 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a5080b6-ec90-485b-a47e-bf97df621845" name="Changes" comment="v1.4.1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/UMLWebApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/UMLWebApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/OllamaAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/OllamaAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/RelationshipDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/RelationshipDefinition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/SourceCodeParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/analysis/SourceCodeParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/MetamodelFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/MetamodelFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/SyntheticDataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/core/SyntheticDataGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/AccessModifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/AccessModifier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Attr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Attr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/C.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/C.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/ClassType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/ClassType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Local.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Local.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Met.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Met.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Pack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Pack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Par.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Par.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/RelationshipType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/RelationshipType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Ret.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Ret.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Sys.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/Sys.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/URel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/metamodel/URel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/MermaidGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/MermaidGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/UMLWebController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/LMJU/projectCW/output/UMLWebController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/MetamodelTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/MetamodelTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/ProjectCwApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/LMJU/projectCW/ProjectCwApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training_data.jsonl" beforeDir="false" afterPath="$PROJECT_DIR$/training_data.jsonl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,12 +61,12 @@
     }
   }
 }</component>
-  <component name="GitLabMergeRequestsSettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "first": "https://gitlab.com/a.alberton/6200comp-2025-26-andrey-alberton-932437.git",
-    "second": "caa6aea7-9b6a-470e-ae1f-0b9848957c1a"
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;https://gitlab.com/a.alberton/6200comp-2025-26-andrey-alberton-932437.git&quot;,
+    &quot;second&quot;: &quot;caa6aea7-9b6a-470e-ae1f-0b9848957c1a&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -64,43 +89,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.AIDemo.executor": "Run",
-    "Application.FullPipelineDemo.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.ManualGenerationDemo.executor": "Run",
-    "Application.SyntheticDataGenerator.executor": "Debug",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.ProjectCwApplication.executor": "Run",
-    "Spring Boot.UMLController.executor": "Run",
-    "Spring Boot.UMLRecoveryService.executor": "Run",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/andrey/IdeaProjects/6200comp-2025-26-andrey-alberton-932437",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "settings.sync",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.AIDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FullPipelineDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ManualGenerationDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SyntheticDataGenerator.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ProjectCwApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.UMLController.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.UMLRecoveryService.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.UMLWebApplication.executor&quot;: &quot;Run&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/andrey/IdeaProjects/6200comp-2025-26-andrey-alberton-932437&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -109,7 +136,7 @@
       <recent name="com.LMJU.projectCW" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.SyntheticDataGenerator">
+  <component name="RunManager" selected="Spring Boot.UMLWebApplication">
     <configuration name="SyntheticDataGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.LMJU.projectCW.core.SyntheticDataGenerator" />
       <module name="LLM4AbstractingUml" />
@@ -203,7 +230,18 @@
       <workItem from="1770129959582" duration="878000" />
       <workItem from="1770199764312" duration="2956000" />
       <workItem from="1770631574335" duration="1712000" />
-      <workItem from="1774796475430" duration="373000" />
+      <workItem from="1774796475430" duration="429000" />
+      <workItem from="1774796944571" duration="251000" />
+      <workItem from="1776012942908" duration="38000" />
+      <workItem from="1776247690630" duration="618000" />
+      <workItem from="1776248929943" duration="107000" />
+      <workItem from="1776249049040" duration="113000" />
+      <workItem from="1776249186555" duration="597000" />
+      <workItem from="1776683565899" duration="19000" />
+      <workItem from="1776715792883" duration="1884000" />
+      <workItem from="1776761896859" duration="853000" />
+      <workItem from="1776765237795" duration="31000" />
+      <workItem from="1776765335096" duration="4891000" />
     </task>
     <task id="LOCAL-00001" summary="Maven Setup">
       <option name="closed" value="true" />
@@ -261,7 +299,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774796834037</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="v1.4.1">
+      <option name="closed" value="true" />
+      <created>1774796856321</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1774796856321</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
